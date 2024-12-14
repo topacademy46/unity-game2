@@ -40,6 +40,8 @@ public class Movement : MonoBehaviour
         if (rb.velocity.x == 0 && rb.velocity.y == 0)
         {
             anim.isIdle = true;
+            anim.isWalk = false;
+            anim.isRun = false;
         }
         else
         {
@@ -64,11 +66,13 @@ public class Movement : MonoBehaviour
             if (runMode)
             {
                 anim.isRun = true;
+                anim.isWalk = false;
                 rb.AddForce(new Vector2(runSpeed * Time.deltaTime, 0), ForceMode2D.Impulse);
             }
             else
             {
                 anim.isWalk = true;
+                anim.isRun = false;
                 rb.AddForce(new Vector2(walkSpeed * Time.deltaTime, 0), ForceMode2D.Impulse);
             }
         }
