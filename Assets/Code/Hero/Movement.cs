@@ -67,6 +67,7 @@ public class Movement : MonoBehaviour
             {
                 anim.isRun = true;
                 anim.isWalk = false;
+                staminaComponent.currentStamina -= 1 * Time.deltaTime;
                 rb.AddForce(new Vector2(runSpeed * Time.deltaTime, 0), ForceMode2D.Impulse);
             }
             else
@@ -82,11 +83,14 @@ public class Movement : MonoBehaviour
             if (runMode)
             {
                 anim.isRun = true;
+                anim.isWalk = false;
+                staminaComponent.currentStamina -= 1 * Time.deltaTime;
                 rb.AddForce(new Vector2(runSpeed * Time.deltaTime * -1, 0), ForceMode2D.Impulse);
             }
             else
             {
                 anim.isWalk = true;
+                anim.isRun = false;
                 rb.AddForce(new Vector2(walkSpeed * Time.deltaTime * -1, 0), ForceMode2D.Impulse);
             }
         }
