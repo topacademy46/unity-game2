@@ -11,12 +11,14 @@ public class Movement : MonoBehaviour
     private Rigidbody2D rb;
     private StaminaComponent staminaComponent;
     private AnimStateMachine anim;
+    private InputService inputService;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         staminaComponent = GetComponent<StaminaComponent>();
         anim = GetComponent<AnimStateMachine>();
+        inputService = GetComponent<InputService>();
     }
 
     void Update()
