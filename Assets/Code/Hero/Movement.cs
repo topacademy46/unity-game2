@@ -10,12 +10,14 @@ public class Movement : MonoBehaviour
     private Rigidbody2D rb;
     private StaminaComponent staminaComponent;
     private InputService inputService;
+    private Animator animator;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         staminaComponent = GetComponent<StaminaComponent>();
         inputService = GetComponent<InputService>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -23,6 +25,7 @@ public class Movement : MonoBehaviour
         FlipX();
         Move();
         Jump();
+        UpdateAnimator();
     }
 
     void FlipX()
@@ -57,5 +60,11 @@ public class Movement : MonoBehaviour
         {
             rb.velocity = new Vector2(walkSpeed * inputService.getDirectionX(), rb.velocity.y);
         }
+    }
+
+    private void UpdateAnimator()
+    {
+        animator.SetBool("RunMode", runMode);
+        animator.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
     }
 }

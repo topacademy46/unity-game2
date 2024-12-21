@@ -38,4 +38,13 @@ public class InputService : MonoBehaviour
         }
         return false;
     }
+
+    public bool getMouseLeftClick()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            return true;
+        }
+        return false;
+    }
 }
