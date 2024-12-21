@@ -183,6 +183,7 @@ GameObject:
   - component: {fileID: 457733335}
   - component: {fileID: 457733336}
   - component: {fileID: 457733337}
+  - component: {fileID: 457733338}
   m_Layer: 0
   m_Name: Hero
   m_TagString: Untagged
@@ -396,6 +397,18 @@ MonoBehaviour:
   isRun: 0
   isWalk: 0
   isIdle: 0
+--- !u!114 &457733338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 457733329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6639f57d000cda14e925e6bd4600d554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

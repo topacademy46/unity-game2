@@ -3,6 +3,7 @@ using UnityEngine;
 public class InputService : MonoBehaviour
 {
     private float directionX;
+    private bool isLeftAltPressed = false;
 
     public float getDirectionX()
     {
@@ -18,5 +19,23 @@ public class InputService : MonoBehaviour
         }
 
         return directionX;
+    }
+
+    public bool getLeftAltPressed()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        {
+            isLeftAltPressed = !isLeftAltPressed;
+        }
+        return isLeftAltPressed;
+    }
+
+    public bool getSpacePressed()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            return true;
+        }
+        return false;
     }
 }

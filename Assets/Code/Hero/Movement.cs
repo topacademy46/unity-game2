@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 public class Movement : MonoBehaviour
 {
     [SerializeField] private bool runMode = false;
@@ -10,50 +9,37 @@ public class Movement : MonoBehaviour
 
     private Rigidbody2D rb;
     private StaminaComponent staminaComponent;
-    private AnimStateMachine anim;
     private InputService inputService;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         staminaComponent = GetComponent<StaminaComponent>();
-        anim = GetComponent<AnimStateMachine>();
         inputService = GetComponent<InputService>();
     }
 
     void Update()
     {
-        InputHandler();
-        Idle();
+        FlipX();
         Move();
         Jump();
     }
 
-    void InputHandler()
+    void FlipX()
     {
-        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        if (inputService.getDirectionX() > 0)
         {
-            runMode = !runMode;
+            transform.localScale = new Vector2(Mathf.Abs(transform.localScale.x), transform.localScale.y);
         }
-    }
-
-    void Idle()
-    {
-        if (rb.velocity.x == 0 && rb.velocity.y == 0)
+        else if (inputService.getDirectionX() < 0)
         {
-            anim.isIdle = true;
-            anim.isWalk = false;
-            anim.isRun = false;
-        }
-        else
-        {
-            anim.isIdle = false;
+            transform.localScale = new Vector2(Mathf.Abs(transform.localScale.x) * -1, transform.localScale.y);
         }
     }
 
     void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && rb.velocity.y == 0 && staminaComponent.currentStamina >= 15)
+        if (inputService.getSpacePressed() && rb.velocity.y == 0 && staminaComponent.currentStamina >= 15)
         {
             staminaComponent.currentStamina -= 15;
             rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
@@ -62,40 +48,14 @@ public class Movement : MonoBehaviour
 
     void Move()
     {
-        if (Input.GetKey(KeyCode.D))
+        runMode = inputService.getLeftAltPressed();
+        if (runMode)
         {
-            transform.localScale = new Vector2(Mathf.Abs(transform.localScale.x), transform.localScale.y);
-            if (runMode)
-            {
-                anim.isRun = true;
-                anim.isWalk = false;
-                staminaComponent.currentStamina -= 1 * Time.deltaTime;
-                rb.AddForce(new Vector2(runSpeed * Time.deltaTime, 0), ForceMode2D.Impulse);
-            }
-            else
-            {
-                anim.isWalk = true;
-                anim.isRun = false;
-                rb.AddForce(new Vector2(walkSpeed * Time.deltaTime, 0), ForceMode2D.Impulse);
-            }
+            rb.velocity = new Vector2(runSpeed * inputService.getDirectionX(), rb.velocity.y);
         }
-        if (Input.GetKey(KeyCode.A))
+        else
         {
-            transform.localScale = new Vector2(Mathf.Abs(transform.localScale.x) * -1, transform.localScale.y);
-            if (runMode)
-            {
-                anim.isRun = true;
-                anim.isWalk = false;
-                staminaComponent.currentStamina -= 1 * Time.deltaTime;
-                rb.AddForce(new Vector2(runSpeed * Time.deltaTime * -1, 0), ForceMode2D.Impulse);
-            }
-            else
-            {
-                anim.isWalk = true;
-                anim.isRun = false;
-                rb.AddForce(new Vector2(walkSpeed * Time.deltaTime * -1, 0), ForceMode2D.Impulse);
-            }
+            rb.velocity = new Vector2(walkSpeed * inputService.getDirectionX(), rb.velocity.y);
         }
     }
-
 }
